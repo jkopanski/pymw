@@ -81,6 +81,8 @@ def stripline( w, t, b, mu=1.0, eps=1.0):
     -------
     Z0 : float
         Characteristic impedance of the line
+    fp : float
+        Limit frequency for first waveguide mode H propagation [GHz]
     """
     if t != 0:
         m  = 6 * ( b - t) / ( 3 * b - t)
@@ -93,5 +95,6 @@ def stripline( w, t, b, mu=1.0, eps=1.0):
     else:
         k  = 1 / np.cosh( const.pi * w / ( 2 * b))
         Z0 = 29.976 * const.pi * np.sqrt( mu / eps) / ( mp.mpc( -1j) * mp.taufrom( k = k))
-        #* mp.ellipk( k) / mp.ellipk( np.sqrt( 1 - k ** 2)) 
-    return Z0
+        #* mp.ellipk( k) / mp.ellipk( np.sqrt( 1 - k ** 2))
+    fp = 0.30 / ( np.sqrt( eps) * ( 2 * w + b / 2))
+    return (Z0, fp)
